@@ -24,13 +24,13 @@ public class StudentService {
 //			new Student(1L,
 //						"John",
 //						"John.Doe@123.com",
-//						LocalDate.of(2001, Month.FEBRUARY, 4),
-//						21),
+//						LocalDate.of(2001, Month.FEBRUARY, 4)
+//						),
 //			new Student(2L,
 //					"Mary",
 //					"Mary.Doe@123.com",
-//					LocalDate.of(2002, Month.FEBRUARY, 4),
-//					20)
+//					LocalDate.of(2002, Month.FEBRUARY, 4)
+//					)
 //			);
 	
 	public List<Student> getAllStudent(){
