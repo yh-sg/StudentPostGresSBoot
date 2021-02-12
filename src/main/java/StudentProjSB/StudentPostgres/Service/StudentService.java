@@ -12,7 +12,7 @@ import StudentProjSB.StudentPostgres.DAO.StudentRepository;
 import StudentProjSB.StudentPostgres.Model.Student;
 
 @Service
-public class StudentService {
+public class StudentService implements IStudentService{
 	
 	@Autowired
 	private final StudentRepository studentRepository;
@@ -34,19 +34,50 @@ public class StudentService {
 //					)
 //			);
 	
+	@Override
 	public List<Student> getAllStudent(){
 		return studentRepository.findAll();
 	}
 	
-//	public Student getOneStudent(Long id) {
-//		
-//	}
+	@Override
+	public Student getOneStudent(Long id) {
+		Optional<Student> findOneStudent = studentRepository.findById(id);
+		if(findOneStudent.isEmpty()) {
+			throw new IllegalStateException("No such student id: " + id);
+		}
+		return findOneStudent.get();
+	}
 	
+	@Override
 	public void postStudent(Student student) {
 		Optional<Student> studentByEmail = studentRepository.findStudentByEmail(student.getEmail());
 		if(studentByEmail.isPresent()) {
 			throw new IllegalStateException("Email taken");
 		}
 		studentRepository.save(student);
+	}
+	
+	@Override
+	public void deleteStudent(Long id) {
+		boolean exists = studentRepository.existsById(id);
+		if(!exists) {
+			throw new IllegalStateException("No such student id: " + id);
+		}
+		studentRepository.deleteById(id);
+	}
+
+	@Override
+	public Student updateStudent(Long id, Student student) {
+		Optional<Student> result = studentRepository.findById(id);
+		if(result.isEmpty()) {
+			throw new IllegalStateException("No such student id: " + id);
+		}
+		System.out.println("===============");
+		System.out.println(result);
+		System.out.println("===============");
+		Student updatedStudent = result.get();
+		updatedStudent.setName(student.getName());
+		updatedStudent.setEmail(student.getEmail());
+//		studentRepository.save()
 	}
 }
