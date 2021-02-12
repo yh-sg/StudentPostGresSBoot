@@ -3,7 +3,10 @@ package StudentProjSB.StudentPostgres.Service;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,6 +70,7 @@ public class StudentService implements IStudentService{
 	}
 
 	@Override
+	@Transactional
 	public Student updateStudent(Long id, Student student) {
 		Optional<Student> result = studentRepository.findById(id);
 		if(result.isEmpty()) {
@@ -76,8 +80,14 @@ public class StudentService implements IStudentService{
 		System.out.println(result);
 		System.out.println("===============");
 		Student updatedStudent = result.get();
+		System.out.println("===============");
+		System.out.println(updatedStudent);
+		System.out.println("===============");
+		
 		updatedStudent.setName(student.getName());
+
 		updatedStudent.setEmail(student.getEmail());
-//		studentRepository.save()
+		
+		return studentRepository.save(updatedStudent);
 	}
 }
