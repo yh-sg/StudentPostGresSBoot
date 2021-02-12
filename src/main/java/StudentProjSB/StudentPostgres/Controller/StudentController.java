@@ -1,28 +1,29 @@
 package StudentProjSB.StudentPostgres.Controller;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import StudentProjSB.StudentPostgres.Model.Student;
+import StudentProjSB.StudentPostgres.Service.StudentService;
 
 @RestController
+@RequestMapping("api/v1/students")
 public class StudentController {
 	
+	@Autowired
+	private final StudentService studentService;
+	
+	public StudentController(StudentService studentService) {
+		this.studentService = studentService;
+	}
+	
 	@GetMapping
-	public List<Student> hello() {
-		return List.of(
-				new Student(
-						1L,
-						"John",
-						"John.Doe@123.com",
-						LocalDate.of(2001, Month.FEBRUARY, 4),
-						21
-						)
-				);
+	public List<Student> allStudents() {
+		return studentService.getAllStudent();
 	}
 	
 }
