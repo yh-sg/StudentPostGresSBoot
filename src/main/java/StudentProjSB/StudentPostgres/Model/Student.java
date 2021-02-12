@@ -12,6 +12,7 @@ import javax.persistence.Table;
 @Entity //For Hibernate
 @Table //For table in database
 public class Student {
+	
 	@Id
 	@SequenceGenerator(
 		name = "student_sequence",
@@ -23,6 +24,12 @@ public class Student {
 			generator = "student_sequence"
 	)
 	private Long id;
+//	@Column(
+//			name = "FullName",
+//			nullable = false,
+//			columnDefination = "TEXT",
+//			unique = true
+//			)
 	private String name;
 	private String email;
 	private LocalDate dob;
